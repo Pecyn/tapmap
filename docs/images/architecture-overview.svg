@@ -1,0 +1,73 @@
+<svg width="680" height="520" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Prohlížeč -->
+  <rect x="30" y="30" width="620" height="130" rx="14" fill="#f5f0ff" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="50" y="58" font-size="13" font-weight="600" fill="#1a1a1a">Prohlížeč</text>
+  <text x="50" y="74" font-size="11" fill="#666">běží u uživatele</text>
+
+  <rect x="60" y="85" width="175" height="56" rx="8" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="148" y="109" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">Client Components</text>
+  <text x="148" y="127" font-size="11" fill="#555" text-anchor="middle">Mapa, filtry, search</text>
+
+  <rect x="260" y="85" width="175" height="56" rx="8" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="348" y="109" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">Apollo Client</text>
+  <text x="348" y="127" font-size="11" fill="#555" text-anchor="middle">GraphQL cache v prohlížeči</text>
+
+  <rect x="460" y="85" width="155" height="56" rx="8" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="538" y="109" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">Mapbox GL JS</text>
+  <text x="538" y="127" font-size="11" fill="#555" text-anchor="middle">react-map-gl</text>
+
+  <!-- Arrow 1 -->
+  <line x1="340" y1="160" x2="340" y2="195" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="370" y="182" font-size="11" fill="#888780">HTTP / HTML</text>
+
+  <!-- tapmap-web -->
+  <rect x="30" y="200" width="620" height="130" rx="14" fill="#e6faf5" stroke="#5dcaa5" stroke-width="1"/>
+  <text x="50" y="228" font-size="13" font-weight="600" fill="#1a1a1a">tapmap-web</text>
+  <text x="50" y="244" font-size="11" fill="#666">Next.js 14 · port 3000</text>
+
+  <rect x="60" y="255" width="175" height="56" rx="8" fill="#ccf2e6" stroke="#5dcaa5" stroke-width="1"/>
+  <text x="148" y="279" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">Server Components</text>
+  <text x="148" y="297" font-size="11" fill="#555" text-anchor="middle">SSR · ISR · SSG</text>
+
+  <rect x="260" y="255" width="175" height="56" rx="8" fill="#ccf2e6" stroke="#5dcaa5" stroke-width="1"/>
+  <text x="348" y="279" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">Server Actions</text>
+  <text x="348" y="297" font-size="11" fill="#555" text-anchor="middle">mutace (later)</text>
+
+  <rect x="460" y="255" width="155" height="56" rx="8" fill="#ccf2e6" stroke="#5dcaa5" stroke-width="1"/>
+  <text x="538" y="279" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">GraphQL Codegen</text>
+  <text x="538" y="297" font-size="11" fill="#555" text-anchor="middle">generované typy + hooks</text>
+
+  <!-- Arrow 2 -->
+  <line x1="340" y1="330" x2="340" y2="365" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="370" y="352" font-size="11" fill="#888780">GraphQL / HTTP · port 4000</text>
+
+  <!-- tapmap-api -->
+  <rect x="30" y="370" width="430" height="110" rx="14" fill="#fff0ec" stroke="#f4a88a" stroke-width="1"/>
+  <text x="50" y="398" font-size="13" font-weight="600" fill="#1a1a1a">tapmap-api</text>
+  <text x="50" y="414" font-size="11" fill="#666">Node.js · Fastify · port 4000</text>
+
+  <rect x="60" y="420" width="155" height="44" rx="8" fill="#ffe0d6" stroke="#f4a88a" stroke-width="1"/>
+  <text x="138" y="438" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">GraphQL Yoga</text>
+  <text x="138" y="454" font-size="11" fill="#555" text-anchor="middle">schema + resolvery</text>
+
+  <rect x="240" y="420" width="155" height="44" rx="8" fill="#ffe0d6" stroke="#f4a88a" stroke-width="1"/>
+  <text x="318" y="438" font-size="12" font-weight="500" fill="#1a1a1a" text-anchor="middle">Prisma ORM</text>
+  <text x="318" y="454" font-size="11" fill="#555" text-anchor="middle">migrace · seed · $queryRaw</text>
+
+  <!-- Arrow 3 -->
+  <line x1="530" y1="390" x2="478" y2="390" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- PostgreSQL -->
+  <rect x="480" y="370" width="170" height="110" rx="14" fill="#fef9ec" stroke="#f0c060" stroke-width="1"/>
+  <text x="565" y="398" font-size="13" font-weight="600" fill="#1a1a1a" text-anchor="middle">PostgreSQL</text>
+  <text x="565" y="414" font-size="11" fill="#666" text-anchor="middle">port 5432</text>
+  <text x="565" y="434" font-size="11" fill="#555" text-anchor="middle">Brewery · Beer</text>
+  <text x="565" y="450" font-size="11" fill="#555" text-anchor="middle">BeerStyle · Ingredient</text>
+  <text x="565" y="466" font-size="11" fill="#555" text-anchor="middle">indexy · fulltext</text>
+</svg>
