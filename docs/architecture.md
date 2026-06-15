@@ -4,7 +4,7 @@
 
 Craft beer brewery catalog with interactive map. Learning project focused on fullstack development: Next.js, GraphQL, PostgreSQL.
 
-**Tech stack:** Next.js 14 · Node.js · GraphQL Yoga · Prisma ORM · PostgreSQL · Mapbox GL JS · TypeScript
+**Tech stack:** Next.js 16 · Node.js · GraphQL Yoga · Prisma ORM · PostgreSQL · Mapbox GL JS · TypeScript
 
 ---
 
@@ -15,7 +15,7 @@ Two independent Node.js projects in a single monorepo:
 ```
 tapmap/
 ├── tapmap-api/     # Node.js · Fastify · GraphQL Yoga · Prisma
-├── tapmap-web/     # Next.js 14 · React · Apollo Client · Mapbox
+├── tapmap-web/     # Next.js 16 · React · Apollo Client · Mapbox
 └── docs/
 ```
 
@@ -37,8 +37,8 @@ Node.js backend with GraphQL API.
 | -------------- | ------------- |
 | HTTP server    | Fastify       |
 | GraphQL server | GraphQL Yoga  |
-| ORM            | Prisma        |
-| Database       | PostgreSQL 16 |
+| ORM            | Prisma 7      |
+| Database       | PostgreSQL 17 |
 | Language       | TypeScript    |
 
 **Responsibilities:**
@@ -54,7 +54,7 @@ Next.js frontend, connects to tapmap-api via GraphQL.
 
 | Layer           | Technology                  |
 | --------------- | --------------------------- |
-| Framework       | Next.js 14 (App Router)     |
+| Framework       | Next.js 16 (App Router)     |
 | GraphQL client  | Apollo Client               |
 | Map             | Mapbox GL JS (react-map-gl) |
 | Type generation | GraphQL Codegen             |
@@ -90,8 +90,9 @@ Client Components (map, filters) use Apollo Client in the browser.
 
 ## Database
 
-PostgreSQL with Prisma ORM.
+PostgreSQL 17 with Prisma 7 ORM.
 
+- **Prisma Config** – `prisma.config.ts` in project root (Prisma 7) – configures DATABASE_URL, schema location, migrations path
 - **Prisma Client** – typesafe queries for standard CRUD operations
 - **Prisma Migrate** – versioned SQL migrations
 - **`$queryRaw`** – complex queries: aggregations, GROUP BY, fulltext search

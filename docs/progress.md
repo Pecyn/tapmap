@@ -1,15 +1,15 @@
 # TapMap – Progress
 
-## Status: Planning
+## Status: In Progress – Phase 0
 
 ---
 
 ## Phase 0 – Setup & Infrastructure
 
-- [ ] Initialize tapmap-api (Node.js + Fastify + TypeScript)
-- [ ] Initialize tapmap-web (Next.js 14 + TypeScript)
-- [ ] PostgreSQL locally (Docker or native)
-- [ ] Prisma setup + DB connection
+- [x] Initialize tapmap-api (Node.js + Fastify + TypeScript)
+- [x] Initialize tapmap-web (Next.js 16 + TypeScript + Tailwind)
+- [x] PostgreSQL locally (Docker – postgres:17)
+- [x] Prisma setup + DB connection
 - [ ] GraphQL Yoga setup in tapmap-api
 - [ ] Apollo Client setup in tapmap-web
 - [ ] GraphQL Codegen setup (schema → types)
@@ -85,10 +85,15 @@
 
 ## Decisions Log
 
-| Date | Decision | Reason |
-|---|---|---|
-| 2026-06 | Two separate projects (tapmap-api + tapmap-web) | Fullstack learning – clean BE/FE separation |
-| 2026-06 | GraphQL (not REST) | Nested data, codegen, learning value |
-| 2026-06 | Prisma ORM + $queryRaw | ORM for standard ops, raw SQL for complex queries |
-| 2026-06 | Mapbox GL JS (react-map-gl) | Best DX, free tier sufficient, TypeScript support |
-| 2026-06 | No auth in initial version | Keeps scope manageable, can be added later |
+| Date    | Decision                                        | Reason                                                          |
+| ------- | ----------------------------------------------- | --------------------------------------------------------------- |
+| 2026-06 | Two separate projects (tapmap-api + tapmap-web) | Fullstack learning – clean BE/FE separation                     |
+| 2026-06 | GraphQL (not REST)                              | Nested data, codegen, learning value                            |
+| 2026-06 | Prisma ORM + $queryRaw                          | ORM for standard ops, raw SQL for complex queries               |
+| 2026-06 | Mapbox GL JS (react-map-gl)                     | Best DX, free tier sufficient, TypeScript support               |
+| 2026-06 | No auth in initial version                      | Keeps scope manageable, can be added later                      |
+| 2026-06 | Tailwind CSS + shadcn/ui                        | Fullstack learning priority, Tailwind is industry standard      |
+| 2026-06 | PostgreSQL 17 (not 16 or 18)                    | Stable, fully supported by Prisma, newer than 16                |
+| 2026-06 | Prisma 7                                        | Latest version – prisma.config.ts, DATABASE_URL outside schema  |
+| 2026-06 | Port 4200 (not 4000)                            | Ports 3963–4062 reserved by Hyper-V/WSL2 on Windows 11          |
+| 2026-06 | DATABASE_URL uses 127.0.0.1 (not localhost)     | Docker on Windows maps ports to 127.0.0.1, localhost unreliable |
