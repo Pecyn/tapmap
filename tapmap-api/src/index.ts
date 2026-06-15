@@ -17,8 +17,7 @@ const yoga = createYoga({
 app.route({
   url: yoga.graphqlEndpoint,
   method: ["GET", "POST", "OPTIONS"],
-  handler: (req, reply) =>
-    yoga.handleNodeRequestAndResponse(req, reply, { req, reply }),
+  handler: (req, reply) => yoga.handleNodeRequestAndResponse(req, reply),
 });
 
 const port = Number(process.env.PORT ?? 4200);
