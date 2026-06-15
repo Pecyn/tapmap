@@ -3,5 +3,5 @@ export default function Home() {
     <main className="p-8">
       <h1 className="text-2xl font-semibold">TapMap</h1>
     </main>
-  );
+  )
 }

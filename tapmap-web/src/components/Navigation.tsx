@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
 const navLinks = [
   { href: '/breweries', label: 'Breweries' },
   { href: '/beers', label: 'Beers' },
   { href: '/styles', label: 'Styles' },
-];
+]
 
 export default function Navigation() {
-  const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <header className="border-b border-gray-200 bg-white">
@@ -28,9 +28,7 @@ export default function Navigation() {
               key={href}
               href={href}
               className={`text-sm font-medium transition-colors ${
-                pathname.startsWith(href)
-                  ? 'text-gray-900'
-                  : 'text-gray-500 hover:text-gray-900'
+                pathname.startsWith(href) ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'
               }`}
             >
               {label}
@@ -44,7 +42,15 @@ export default function Navigation() {
           onClick={() => setMenuOpen((open) => !open)}
           aria-label="Toggle menu"
         >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
             {menuOpen ? (
               <>
                 <line x1="4" y1="4" x2="18" y2="18" />
@@ -70,9 +76,7 @@ export default function Navigation() {
               href={href}
               onClick={() => setMenuOpen(false)}
               className={`text-sm font-medium transition-colors ${
-                pathname.startsWith(href)
-                  ? 'text-gray-900'
-                  : 'text-gray-500 hover:text-gray-900'
+                pathname.startsWith(href) ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'
               }`}
             >
               {label}
@@ -81,5 +85,5 @@ export default function Navigation() {
         </nav>
       )}
     </header>
-  );
+  )
 }

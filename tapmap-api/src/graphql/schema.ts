@@ -1,4 +1,4 @@
-import { createSchema } from "graphql-yoga";
+import { createSchema } from 'graphql-yoga'
 
 export const schema = createSchema({
   typeDefs: `
@@ -8,7 +8,7 @@ export const schema = createSchema({
   `,
   resolvers: {
     Query: {
-      hello: () => "Hello from TapMap API!",
+      hello: () => 'Hello from TapMap API!',
     },
   },
-});
+})
