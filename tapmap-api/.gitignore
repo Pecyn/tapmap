@@ -3,3 +3,7 @@ dist/
 .env
 
 /src/generated/prisma
+
+*.tsbuildinfo
+.pnpm-debug.log*
+npm-debug.log*
