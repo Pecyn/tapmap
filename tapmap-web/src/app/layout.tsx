@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Navigation from '@/components/Navigation'
+import { ApolloClientProvider } from '@/lib/apollo-provider'
 import './globals.css'
 
 const geistSans = Geist({
@@ -26,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Navigation />
-        <div className="flex flex-col flex-1">{children}</div>
+        <ApolloClientProvider>
+          <Navigation />
+          <div className="flex flex-col flex-1">{children}</div>
+        </ApolloClientProvider>
       </body>
     </html>
   )
