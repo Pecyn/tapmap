@@ -11,3 +11,62 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Brewery {
+  id          String   @id @default(cuid())
+  name        String
+  city        String?
+  street      String?
+  postalCode  String?
+  phone       String?
+  country     String   @default("CZ")
+  latitude    Float?
+  longitude   Float?
+  foundedYear Int?
+  website     String?
+  description String?
+  wikidataId  String?  @unique
+  beers       Beer[]
+  createdAt   DateTime @default(now())
+
+  @@index([country])
+}
+
+model BeerStyle {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  beers       Beer[]
+}
+
+model Ingredient {
+  id    String           @id @default(cuid())
+  name  String           @unique
+  beers BeerIngredient[]
+}
+
+model Beer {
+  id          String           @id @default(cuid())
+  name        String
+  abv         Float?
+  ibu         Int?
+  description String?
+  brewery     Brewery          @relation(fields: [breweryId], references: [id])
+  breweryId   String
+  style       BeerStyle        @relation(fields: [styleId], references: [id])
+  styleId     String
+  ingredients BeerIngredient[]
+  createdAt   DateTime         @default(now())
+
+  @@index([breweryId])
+  @@index([styleId])
+}
+
+model BeerIngredient {
+  beer         Beer       @relation(fields: [beerId], references: [id])
+  beerId       String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId String
+
+  @@id([beerId, ingredientId])
+}
