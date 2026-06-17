@@ -1,6 +1,6 @@
 # TapMap – Progress
 
-## Status: Phase 0 Complete ✅
+## Status: In Progress – Phase 1
 
 ---
 
@@ -18,19 +18,18 @@
 
 ## Phase 1 – Data Layer
 
-- [ ] Prisma schema – all models (Brewery, Beer, BeerStyle, Ingredient, BeerIngredient)
-- [ ] Migrations – create tables
-- [ ] Indexes (country, type, breweryId, styleId)
+- [x] Prisma schema – all models (Brewery, Beer, BeerStyle, Ingredient, BeerIngredient)
+- [x] Migrations – create tables
+- [x] Indexes (country, breweryId, styleId)
 - [ ] Seed script – BeerStyle data (~20 styles, manual)
-- [ ] Seed script – Open Brewery DB API (EU breweries)
 - [ ] Seed script – Wikidata SPARQL (Czech breweries)
-- [ ] Seed script – beers (beer.db CSV or AI generated)
+- [ ] Seed script – beers (AI generated)
 - [ ] Verify data in DB (Prisma Studio or psql)
 
 ## Phase 2 – GraphQL API
 
 - [ ] GraphQL schema (SDL) – Brewery, Beer, BeerStyle, Ingredient
-- [ ] Resolver – breweries (list with country, type filter)
+- [ ] Resolver – breweries (list with country filter)
 - [ ] Resolver – brewery (detail + beers)
 - [ ] Resolver – beers (list with style, abv filter)
 - [ ] Resolver – beer (detail + style + ingredients)
@@ -80,23 +79,28 @@
 - [ ] Fulltext search across breweries and beers
 - [ ] Stats and charts (avg ABV by style, beer counts per brewery)
 - [ ] Map filter (show only specific brewery types)
+- [ ] BreweryType classification (enrichment, no reliable source found yet)
+- [ ] Geocoding enrichment for breweries missing coordinates (Nominatim or Mapbox)
 
 ---
 
 ## Decisions Log
 
-| Date    | Decision                                        | Reason                                                            |
-| ------- | ----------------------------------------------- | ----------------------------------------------------------------- |
-| 2026-06 | Two separate projects (tapmap-api + tapmap-web) | Fullstack learning – clean BE/FE separation                       |
-| 2026-06 | GraphQL (not REST)                              | Nested data, codegen, learning value                              |
-| 2026-06 | Prisma ORM + $queryRaw                          | ORM for standard ops, raw SQL for complex queries                 |
-| 2026-06 | Mapbox GL JS (react-map-gl)                     | Best DX, free tier sufficient, TypeScript support                 |
-| 2026-06 | No auth in initial version                      | Keeps scope manageable, can be added later                        |
-| 2026-06 | Tailwind CSS + shadcn/ui                        | Fullstack learning priority, Tailwind is industry standard        |
-| 2026-06 | PostgreSQL 17 (not 16 or 18)                    | Stable, fully supported by Prisma, newer than 16                  |
-| 2026-06 | Prisma 7                                        | Latest version – prisma.config.ts, DATABASE_URL outside schema    |
-| 2026-06 | Port 4200 (not 4000)                            | Ports 3963–4062 reserved by Hyper-V/WSL2 on Windows 11            |
-| 2026-06 | DATABASE_URL uses 127.0.0.1 (not localhost)     | Docker on Windows maps ports to 127.0.0.1, localhost unreliable   |
-| 2026-06 | GraphQL Codegen client preset                   | typescript-operations plugin deprecated in codegen v6             |
-| 2026-06 | pnpm v11                                        | Upgraded from v10 – new allowBuilds config in pnpm-workspace.yaml |
-| 2026-06 | Node.js 24.16.0                                 | Latest LTS, documented in .nvmrc                                  |
+| Date    | Decision                                        | Reason                                                                                                            |
+| ------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 2026-06 | Two separate projects (tapmap-api + tapmap-web) | Fullstack learning – clean BE/FE separation                                                                       |
+| 2026-06 | GraphQL (not REST)                              | Nested data, codegen, learning value                                                                              |
+| 2026-06 | Prisma ORM + $queryRaw                          | ORM for standard ops, raw SQL for complex queries                                                                 |
+| 2026-06 | Mapbox GL JS (react-map-gl)                     | Best DX, free tier sufficient, TypeScript support                                                                 |
+| 2026-06 | No auth in initial version                      | Keeps scope manageable, can be added later                                                                        |
+| 2026-06 | Tailwind CSS + shadcn/ui                        | Fullstack learning priority, Tailwind is industry standard                                                        |
+| 2026-06 | PostgreSQL 17 (not 16 or 18)                    | Stable, fully supported by Prisma, newer than 16                                                                  |
+| 2026-06 | Prisma 7                                        | Latest version – prisma.config.ts, DATABASE_URL outside schema                                                    |
+| 2026-06 | Port 4200 (not 4000)                            | Ports 3963–4062 reserved by Hyper-V/WSL2 on Windows 11                                                            |
+| 2026-06 | DATABASE_URL uses 127.0.0.1 (not localhost)     | Docker on Windows maps ports to 127.0.0.1, localhost unreliable                                                   |
+| 2026-06 | GraphQL Codegen client preset                   | typescript-operations plugin deprecated in codegen v6                                                             |
+| 2026-06 | pnpm v11                                        | Upgraded from v10 – new allowBuilds config in pnpm-workspace.yaml                                                 |
+| 2026-06 | Node.js 24.16.0                                 | Latest LTS, documented in .nvmrc                                                                                  |
+| 2026-06 | No BreweryType enum                             | No data source reliably provides this; deferred to future enrichment                                              |
+| 2026-06 | Wikidata SPARQL as primary data source          | Open Brewery DB unusable for CZ (broken country filter), beer.db stale; Wikidata verified live with 246 breweries |
+| 2026-06 | Brewery fields all nullable except id/name      | Real Wikidata coverage is ~50% for coordinates, founding year, website                                            |

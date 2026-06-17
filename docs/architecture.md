@@ -76,15 +76,15 @@ Client Components (map, filters) use Apollo Client in the browser.
 
 ![Data Model](./images/data-model.svg)
 
-| Model          | Key fields                                                               |
-| -------------- | ------------------------------------------------------------------------ |
-| Brewery        | id, name, city, country, latitude, longitude, type, foundedYear, website |
-| Beer           | id, name, abv, ibu, breweryId, styleId, description                      |
-| BeerStyle      | id, name, description, origin                                            |
-| Ingredient     | id, name                                                                 |
-| BeerIngredient | beerId, ingredientId (composite PK)                                      |
+| Model          | Key fields                                                                                                |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| Brewery        | id, name, city, street, postalCode, phone, country, latitude, longitude, foundedYear, website, wikidataId |
+| Beer           | id, name, abv, ibu, breweryId, styleId, description                                                       |
+| BeerStyle      | id, name, description                                                                                     |
+| Ingredient     | id, name                                                                                                  |
+| BeerIngredient | beerId, ingredientId (composite PK)                                                                       |
 
-**BreweryType enum:** `MICRO · REGIONAL · INDUSTRIAL · BREWPUB`
+All fields except `id` and `name` are nullable, reflecting real-world data coverage from Wikidata (see Data Sources below). No `BreweryType` enum – no reliable data source provides this consistently; may be added later as a separate enrichment step.
 
 ---
 
@@ -93,21 +93,22 @@ Client Components (map, filters) use Apollo Client in the browser.
 PostgreSQL 17 with Prisma 7 ORM.
 
 - **Prisma Config** – `prisma.config.ts` in project root (Prisma 7) – configures DATABASE_URL, schema location, migrations path
-- **Prisma Client** – typesafe queries for standard CRUD operations
+- **Prisma Client** – typesafe queries for standard CRUD operations, generated to `src/generated/prisma` (not committed, generated via `pnpm generate`)
 - **Prisma Migrate** – versioned SQL migrations
 - **`$queryRaw`** – complex queries: aggregations, GROUP BY, fulltext search
-- **Indexes** – on `country`, `type`, `breweryId`, `styleId`, fulltext GIN index
+- **Indexes** – on `Brewery.country`, `Beer.breweryId`, `Beer.styleId`
 
 ---
 
 ## Data Sources
 
-| Source              | Content                           | Method                    |
-| ------------------- | --------------------------------- | ------------------------- |
-| Open Brewery DB API | EU breweries with geo coordinates | fetch at seed time        |
-| Wikidata SPARQL     | Czech breweries missing from OBDB | SPARQL query at seed time |
-| beer.db             | Beers linked to breweries         | CSV import                |
-| AI generated        | Czech breweries and beers fill-in | JSON → seed script        |
+| Source             | Content                                                 | Coverage                                                                               | Method                            |
+| ------------------ | ------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------- |
+| Wikidata SPARQL    | Czech breweries (name, coords, founding year, website)  | 246 breweries total; ~52% with coordinates, ~47% with founding year, ~52% with website | SPARQL query at seed time         |
+| AI generated       | Beers for breweries, additional Czech breweries fill-in | MVP scope                                                                              | JSON → seed script                |
+| Geocoding (future) | Coordinates for breweries missing them                  | Planned enrichment, not yet implemented                                                | Nominatim or Mapbox Geocoding API |
+
+**Note:** Open Brewery DB API was evaluated but found unusable for Czech breweries (`by_country` filter does not work reliably, returns mostly US/EU results). beer.db was found stale/unmaintained and is not used. Wikidata is the primary and only verified live data source for breweries as of Phase 1.
 
 ---
 
@@ -120,7 +121,7 @@ GraphQL Codegen generates TypeScript types for both projects:
 tapmap-api/schema.graphql
         ↓ graphql-codegen
 tapmap-api/generated/     → resolver types
-tapmap-web/generated/     → Apollo hooks + query types
+tapmap-web/src/generated/ → Apollo hooks + query types (client preset)
 ```
 
 ---
