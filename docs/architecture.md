@@ -100,15 +100,27 @@ PostgreSQL 17 with Prisma 7 ORM.
 
 ---
 
+## Seeding
+
+Seed logic lives in `prisma/seeds/`, orchestrated by a single entry point at `prisma/seed.ts`. Each data source has its own module exporting one async function (e.g. `seedBeerStyles()`, `seedBreweries()`), called in sequence from `main()`. All seed operations use `upsert` on a stable unique key, making the full seed idempotent and safe to re-run at any time via:
+
+```
+pnpm prisma db seed
+```
+
+---
+
 ## Data Sources
 
-| Source             | Content                                                 | Coverage                                                                               | Method                            |
-| ------------------ | ------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------- |
-| Wikidata SPARQL    | Czech breweries (name, coords, founding year, website)  | 246 breweries total; ~52% with coordinates, ~47% with founding year, ~52% with website | SPARQL query at seed time         |
-| AI generated       | Beers for breweries, additional Czech breweries fill-in | MVP scope                                                                              | JSON → seed script                |
-| Geocoding (future) | Coordinates for breweries missing them                  | Planned enrichment, not yet implemented                                                | Nominatim or Mapbox Geocoding API |
+| Source             | Content                                                           | Coverage (of 246 breweries)                                                   | Method                            |
+| ------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------- |
+| Wikidata SPARQL    | Czech breweries (name, coordinates, founding year, website, city) | 127 with coordinates, 102 with founding year, 115 with website, 143 with city | SPARQL query at seed time         |
+| AI generated       | Beers for breweries, additional Czech breweries fill-in           | MVP scope                                                                     | JSON → seed script                |
+| Geocoding (future) | Coordinates for breweries missing them                            | Planned enrichment, not yet implemented                                       | Nominatim or Mapbox Geocoding API |
 
 **Note:** Open Brewery DB API was evaluated but found unusable for Czech breweries (`by_country` filter does not work reliably, returns mostly US/EU results). beer.db was found stale/unmaintained and is not used. Wikidata is the primary and only verified live data source for breweries as of Phase 1.
+
+City is sourced from Wikidata property P159 (headquarters location), queried separately from coordinates (P625) — coverage differs between the two fields since they're independent properties.
 
 ---
 

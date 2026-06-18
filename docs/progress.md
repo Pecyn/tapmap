@@ -21,8 +21,8 @@
 - [x] Prisma schema – all models (Brewery, Beer, BeerStyle, Ingredient, BeerIngredient)
 - [x] Migrations – create tables
 - [x] Indexes (country, breweryId, styleId)
-- [ ] Seed script – BeerStyle data (~20 styles, manual)
-- [ ] Seed script – Wikidata SPARQL (Czech breweries)
+- [x] Seed script – BeerStyle data (20 styles, manual)
+- [x] Seed script – Wikidata SPARQL (Czech breweries, incl. city via P159)
 - [ ] Seed script – beers (AI generated)
 - [ ] Verify data in DB (Prisma Studio or psql)
 
@@ -81,6 +81,7 @@
 - [ ] Map filter (show only specific brewery types)
 - [ ] BreweryType classification (enrichment, no reliable source found yet)
 - [ ] Geocoding enrichment for breweries missing coordinates (Nominatim or Mapbox)
+- [ ] Street/postal code/phone enrichment for breweries (no source found yet)
 
 ---
 
@@ -104,3 +105,7 @@
 | 2026-06 | No BreweryType enum                             | No data source reliably provides this; deferred to future enrichment                                              |
 | 2026-06 | Wikidata SPARQL as primary data source          | Open Brewery DB unusable for CZ (broken country filter), beer.db stale; Wikidata verified live with 246 breweries |
 | 2026-06 | Brewery fields all nullable except id/name      | Real Wikidata coverage is ~50% for coordinates, founding year, website                                            |
+| 2026-06 | Seed structure: orchestrator + seed modules     | `prisma/seed.ts` calls per-source functions in `prisma/seeds/`, all idempotent via upsert                         |
+| 2026-06 | Prisma 7 requires explicit driver adapter       | `@prisma/adapter-pg` + connection string passed directly in code, not just prisma.config.ts                       |
+| 2026-06 | City sourced via Wikidata P159                  | Headquarters location property; added after initial brewery seed, 143/246 coverage                                |
+| 2026-06 | All project code in English                     | Public portfolio repo – comments, identifiers, docs, commit messages all English regardless of chat language      |
