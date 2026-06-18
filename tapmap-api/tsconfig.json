@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src", "prisma.config.ts", "codegen.ts"]
+  "include": ["src", "prisma","prisma.config.ts", "codegen.ts"]
 }
