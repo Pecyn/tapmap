@@ -16,6 +16,7 @@ const styles = [
   { name: 'Saison' },
   { name: 'Amber Ale' },
   { name: 'Red Ale' },
+  { name: 'Pale Ale' },
   { name: 'Bock' },
   { name: 'Milk Stout' },
   { name: 'Session IPA' },
@@ -31,5 +32,6 @@ export async function seedBeerStyles() {
       create: style,
     })
   }
+  // eslint-disable-next-line no-console
   console.log(`Seeded ${styles.length} beer styles`)
 }

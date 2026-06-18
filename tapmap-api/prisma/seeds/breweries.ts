@@ -134,6 +134,7 @@ export async function seedBreweries() {
   const withWebsite = records.filter((r) => r.website !== undefined).length
   const withCity = records.filter((r) => r.city !== undefined).length
 
+  // eslint-disable-next-line no-console
   console.log(
     `Seeded ${records.length} breweries ` +
       `(${withCoords} with coordinates, ${withYear} with founding year, ${withWebsite} with website, ${withCity} with city)`,
