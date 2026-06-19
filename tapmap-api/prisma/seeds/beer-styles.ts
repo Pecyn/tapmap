@@ -1,8 +1,8 @@
 import { prisma } from '../../src/lib/prisma.js'
 
 const styles = [
-  { name: 'Czech Lager' },
-  { name: 'Pale Lager' },
+  { name: 'Lager' },
+  { name: 'Pilsner' },
   { name: 'IPA' },
   { name: 'APA' },
   { name: 'NEIPA' },
@@ -10,18 +10,18 @@ const styles = [
   { name: 'Porter' },
   { name: 'Wheat Beer' },
   { name: 'Sour/Gose' },
-  { name: 'Pilsner' },
-  { name: 'Dunkel' },
+  { name: 'Dark Lager' },
   { name: 'Hefeweizen' },
   { name: 'Saison' },
   { name: 'Amber Ale' },
+  { name: 'Amber Lager' },
   { name: 'Red Ale' },
-  { name: 'Pale Ale' },
   { name: 'Bock' },
   { name: 'Milk Stout' },
   { name: 'Session IPA' },
   { name: 'Barleywine' },
   { name: 'Radler' },
+  { name: 'Pale Ale' },
 ]
 
 export async function seedBeerStyles() {

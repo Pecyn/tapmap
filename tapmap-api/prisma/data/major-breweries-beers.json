@@ -1,0 +1,84 @@
+[
+  {
+    "breweryName": "Pivovar Plzeňský Prazdroj",
+    "beers": [
+      { "name": "Pilsner Urquell", "style": "Pilsner", "abv": 4.4 },
+      { "name": "Gambrinus Original", "style": "Lager", "abv": 4.3 },
+      { "name": "Gambrinus Premium 12", "style": "Lager", "abv": 5.2 }
+    ]
+  },
+  {
+    "breweryName": "Budějovický Budvar",
+    "beers": [
+      { "name": "Budweiser Budvar Original", "style": "Lager", "abv": 5.0 },
+      { "name": "Budvar Tmavý ležák", "style": "Dark Lager", "abv": 4.7 },
+      { "name": "Budvar Kroužkovaný ležák", "style": "Lager", "abv": 5.0 },
+      { "name": "Budvar 33", "style": "Lager", "abv": 5.0, "ibu": 33 }
+    ]
+  },
+  {
+    "breweryName": "Pivovary Staropramen",
+    "beers": [
+      { "name": "Staropramen Ležák 12°", "style": "Lager", "abv": 5.0 },
+      { "name": "Staropramen Jedenáctka", "style": "Lager", "abv": 4.7 },
+      { "name": "Staropramen Granát", "style": "Amber Lager", "abv": 4.8, "ibu": 26 },
+      { "name": "Staropramen Černý", "style": "Dark Lager", "abv": 4.4 },
+      { "name": "Staropramen Nefiltrovaný", "style": "Lager", "abv": 5.0, "ibu": 18 }
+    ]
+  },
+  {
+    "breweryName": "Pivovar Velké Popovice",
+    "beers": [
+      { "name": "Velkopopovický Kozel Premium", "style": "Lager", "abv": 4.6 },
+      { "name": "Velkopopovický Kozel Černý", "style": "Dark Lager", "abv": 3.8 },
+      { "name": "Velkopopovický Kozel Řezaný", "style": "Amber Lager", "abv": 4.7 },
+      { "name": "Kozel Mistrův ležák", "style": "Lager", "abv": 4.8 }
+    ]
+  },
+  {
+    "breweryName": "Pivovar Radegast",
+    "beers": [
+      { "name": "Radegast Originál", "style": "Lager", "abv": 4.0 },
+      { "name": "Radegast Rázná 10", "style": "Lager", "abv": 4.1, "ibu": 30 },
+      { "name": "Radegast Ryze Hořká 12", "style": "Lager", "abv": 5.1, "ibu": 36 },
+      { "name": "Radegast Ratar", "style": "Lager", "abv": 4.4, "ibu": 50 }
+    ]
+  },
+  {
+    "breweryName": "Pivovar Starobrno",
+    "beers": [
+      { "name": "Starobrno Medium", "style": "Lager", "abv": 4.7 },
+      { "name": "Starobrno Drak", "style": "Lager", "abv": 5.3, "ibu": 28 },
+      { "name": "Starobrno BITR", "style": "Lager", "abv": 4.6, "ibu": 35 },
+      { "name": "Starobrno Nefiltrovaný ležák", "style": "Lager", "abv": 5.0, "ibu": 31 }
+    ]
+  },
+  {
+    "breweryName": "Královský pivovar Krušovice",
+    "beers": [
+      { "name": "Krušovice Originál 10", "style": "Lager", "abv": 4.2 },
+      { "name": "Krušovice Královský ležák 12", "style": "Lager", "abv": 5.0 },
+      { "name": "Krušovice Černé", "style": "Dark Lager", "abv": 3.8, "ibu": 19 },
+      { "name": "Krušovice Imperial", "style": "Pilsner", "abv": 5.0 }
+    ]
+  },
+  {
+    "breweryName": "Rodinný pivovar Bernard",
+    "beers": [
+      { "name": "Bernard Světlý ležák 12°", "style": "Lager", "abv": 5.0 },
+      { "name": "Bernard Sváteční ležák", "style": "Pilsner", "abv": 5.0, "ibu": 34 },
+      { "name": "Bernard Jantarový ležák", "style": "Amber Lager", "abv": 5.0 },
+      { "name": "Bernard Černý ležák", "style": "Dark Lager", "abv": 4.5 },
+      { "name": "Bernard IPA", "style": "IPA", "abv": 5.6 }
+    ]
+  },
+  {
+    "breweryName": "Pivovar Litovel",
+    "beers": [
+      { "name": "Litovel Premium", "style": "Lager", "abv": 5.0 },
+      { "name": "Litovel Moravan", "style": "Lager", "abv": 4.6 },
+      { "name": "Litovel Classic", "style": "Lager", "abv": 4.2 },
+      { "name": "Litovel IPA", "style": "IPA", "abv": 6.0 }
+    ]
+  }
+]
