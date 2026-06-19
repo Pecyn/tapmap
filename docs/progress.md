@@ -1,6 +1,6 @@
 # TapMap – Progress
 
-## Status: In Progress – Phase 1
+## Status: Phase 1 Complete ✅
 
 ---
 
@@ -21,10 +21,10 @@
 - [x] Prisma schema – all models (Brewery, Beer, BeerStyle, Ingredient, BeerIngredient)
 - [x] Migrations – create tables
 - [x] Indexes (country, breweryId, styleId)
-- [x] Seed script – BeerStyle data (20 styles, manual)
+- [x] Seed script – BeerStyle data (21 styles, manual)
 - [x] Seed script – Wikidata SPARQL (Czech breweries, incl. city via P159)
-- [ ] Seed script – beers (AI generated)
-- [ ] Verify data in DB (Prisma Studio or psql)
+- [x] Seed script – beers (Pivovar Malenovice – real data; 9 major breweries – research-based JSON)
+- [x] Verify data in DB (Prisma Studio)
 
 ## Phase 2 – GraphQL API
 
@@ -82,30 +82,34 @@
 - [ ] BreweryType classification (enrichment, no reliable source found yet)
 - [ ] Geocoding enrichment for breweries missing coordinates (Nominatim or Mapbox)
 - [ ] Street/postal code/phone enrichment for breweries (no source found yet)
+- [ ] Additional brewery beers (scrape/research individual brewery websites)
 
 ---
 
 ## Decisions Log
 
-| Date    | Decision                                        | Reason                                                                                                            |
-| ------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| 2026-06 | Two separate projects (tapmap-api + tapmap-web) | Fullstack learning – clean BE/FE separation                                                                       |
-| 2026-06 | GraphQL (not REST)                              | Nested data, codegen, learning value                                                                              |
-| 2026-06 | Prisma ORM + $queryRaw                          | ORM for standard ops, raw SQL for complex queries                                                                 |
-| 2026-06 | Mapbox GL JS (react-map-gl)                     | Best DX, free tier sufficient, TypeScript support                                                                 |
-| 2026-06 | No auth in initial version                      | Keeps scope manageable, can be added later                                                                        |
-| 2026-06 | Tailwind CSS + shadcn/ui                        | Fullstack learning priority, Tailwind is industry standard                                                        |
-| 2026-06 | PostgreSQL 17 (not 16 or 18)                    | Stable, fully supported by Prisma, newer than 16                                                                  |
-| 2026-06 | Prisma 7                                        | Latest version – prisma.config.ts, DATABASE_URL outside schema                                                    |
-| 2026-06 | Port 4200 (not 4000)                            | Ports 3963–4062 reserved by Hyper-V/WSL2 on Windows 11                                                            |
-| 2026-06 | DATABASE_URL uses 127.0.0.1 (not localhost)     | Docker on Windows maps ports to 127.0.0.1, localhost unreliable                                                   |
-| 2026-06 | GraphQL Codegen client preset                   | typescript-operations plugin deprecated in codegen v6                                                             |
-| 2026-06 | pnpm v11                                        | Upgraded from v10 – new allowBuilds config in pnpm-workspace.yaml                                                 |
-| 2026-06 | Node.js 24.16.0                                 | Latest LTS, documented in .nvmrc                                                                                  |
-| 2026-06 | No BreweryType enum                             | No data source reliably provides this; deferred to future enrichment                                              |
-| 2026-06 | Wikidata SPARQL as primary data source          | Open Brewery DB unusable for CZ (broken country filter), beer.db stale; Wikidata verified live with 246 breweries |
-| 2026-06 | Brewery fields all nullable except id/name      | Real Wikidata coverage is ~50% for coordinates, founding year, website                                            |
-| 2026-06 | Seed structure: orchestrator + seed modules     | `prisma/seed.ts` calls per-source functions in `prisma/seeds/`, all idempotent via upsert                         |
-| 2026-06 | Prisma 7 requires explicit driver adapter       | `@prisma/adapter-pg` + connection string passed directly in code, not just prisma.config.ts                       |
-| 2026-06 | City sourced via Wikidata P159                  | Headquarters location property; added after initial brewery seed, 143/246 coverage                                |
-| 2026-06 | All project code in English                     | Public portfolio repo – comments, identifiers, docs, commit messages all English regardless of chat language      |
+| Date    | Decision                                                        | Reason                                                                                                                |
+| ------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| 2026-06 | Two separate projects (tapmap-api + tapmap-web)                 | Fullstack learning – clean BE/FE separation                                                                           |
+| 2026-06 | GraphQL (not REST)                                              | Nested data, codegen, learning value                                                                                  |
+| 2026-06 | Prisma ORM + $queryRaw                                          | ORM for standard ops, raw SQL for complex queries                                                                     |
+| 2026-06 | Mapbox GL JS (react-map-gl)                                     | Best DX, free tier sufficient, TypeScript support                                                                     |
+| 2026-06 | No auth in initial version                                      | Keeps scope manageable, can be added later                                                                            |
+| 2026-06 | Tailwind CSS + shadcn/ui                                        | Fullstack learning priority, Tailwind is industry standard                                                            |
+| 2026-06 | PostgreSQL 17 (not 16 or 18)                                    | Stable, fully supported by Prisma, newer than 16                                                                      |
+| 2026-06 | Prisma 7                                                        | Latest version – prisma.config.ts, DATABASE_URL outside schema                                                        |
+| 2026-06 | Port 4200 (not 4000)                                            | Ports 3963–4062 reserved by Hyper-V/WSL2 on Windows 11                                                                |
+| 2026-06 | DATABASE_URL uses 127.0.0.1 (not localhost)                     | Docker on Windows maps ports to 127.0.0.1, localhost unreliable                                                       |
+| 2026-06 | GraphQL Codegen client preset                                   | typescript-operations plugin deprecated in codegen v6                                                                 |
+| 2026-06 | pnpm v11                                                        | Upgraded from v10 – new allowBuilds config in pnpm-workspace.yaml                                                     |
+| 2026-06 | Node.js 24.16.0                                                 | Latest LTS, documented in .nvmrc                                                                                      |
+| 2026-06 | No BreweryType enum                                             | No data source reliably provides this; deferred to future enrichment                                                  |
+| 2026-06 | Wikidata SPARQL as primary data source                          | Open Brewery DB unusable for CZ (broken country filter), beer.db stale; Wikidata verified live with 246 breweries     |
+| 2026-06 | Brewery fields all nullable except id/name                      | Real Wikidata coverage is ~50% for coordinates, founding year, website                                                |
+| 2026-06 | Seed structure: orchestrator + seed modules                     | `prisma/seed.ts` calls per-source functions in `prisma/seeds/`, all idempotent via upsert                             |
+| 2026-06 | Prisma 7 requires explicit driver adapter                       | `@prisma/adapter-pg` + connection string passed directly in code, not just prisma.config.ts                           |
+| 2026-06 | City sourced via Wikidata P159                                  | Headquarters location property; added after initial brewery seed, 143/246 coverage                                    |
+| 2026-06 | All project code in English                                     | Public portfolio repo – comments, identifiers, docs, commit messages all English                                      |
+| 2026-06 | Beer styles: Lager/Pilsner/Amber Lager/Dark Lager               | Replaced Czech Lager, Pale Lager, Dunkel with accurate English terminology; Hefeweizen kept as widely recognized term |
+| 2026-06 | Beer data: real research over AI generation                     | Pivovar Malenovice (real website), 9 major breweries (web research); AI generation avoided for factual accuracy       |
+| 2026-06 | Beer seed: additional-breweries + major-breweries-beers modules | Pivovar Malenovice in separate module (non-Wikidata source); major breweries from JSON data file                      |
