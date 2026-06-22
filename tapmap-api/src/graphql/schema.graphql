@@ -1,0 +1,61 @@
+type Brewery {
+  id: ID!
+  name: String!
+  city: String
+  street: String
+  postalCode: String
+  phone: String
+  country: String!
+  latitude: Float
+  longitude: Float
+  foundedYear: Int
+  website: String
+  description: String
+  wikidataId: String
+  beers: [Beer!]!
+  createdAt: String!
+}
+
+type Beer {
+  id: ID!
+  name: String!
+  abv: Float
+  ibu: Int
+  description: String
+  brewery: Brewery!
+  style: BeerStyle!
+  createdAt: String!
+}
+
+type BeerStyle {
+  id: ID!
+  name: String!
+  description: String
+  beers: [Beer!]!
+}
+
+type Ingredient {
+  id: ID!
+  name: String!
+}
+
+input BreweryFilter {
+  city: String
+  country: String
+  hasCoordinates: Boolean
+}
+
+input BeerFilter {
+  styleId: ID
+  minAbv: Float
+  maxAbv: Float
+}
+
+type Query {
+  breweries(filter: BreweryFilter, limit: Int, offset: Int): [Brewery!]!
+  brewery(id: ID!): Brewery
+  beers(filter: BeerFilter, limit: Int, offset: Int): [Beer!]!
+  beer(id: ID!): Beer
+  styles: [BeerStyle!]!
+  style(id: ID!): BeerStyle
+}
