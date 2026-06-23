@@ -1,11 +1,12 @@
 import Fastify from 'fastify'
-import { createYoga } from 'graphql-yoga'
-import { schema } from './graphql/schema.js'
+import { createSchema, createYoga } from 'graphql-yoga'
+import { typeDefs } from './graphql/schema.js'
+import { resolvers } from './graphql/resolvers/index.js'
 
 const app = Fastify({ logger: true })
 
 const yoga = createYoga({
-  schema,
+  schema: createSchema({ typeDefs, resolvers }),
   logging: {
     debug: (...args) => args.forEach((arg) => app.log.debug(arg)),
     info: (...args) => args.forEach((arg) => app.log.info(arg)),
