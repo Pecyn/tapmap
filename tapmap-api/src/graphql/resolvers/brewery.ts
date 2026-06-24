@@ -1,5 +1,5 @@
 import type { QueryBreweriesArgs, QueryBreweryArgs } from '../../../generated/graphql.js'
-import { Prisma } from '../../generated/prisma/browser.js'
+import { Prisma } from '../../generated/prisma/client.js'
 import { prisma } from '../../lib/prisma.js'
 
 export const breweryResolvers = {
