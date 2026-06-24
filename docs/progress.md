@@ -1,6 +1,6 @@
 # TapMap – Progress
 
-## Status: Phase 1 Complete ✅
+## Status: Phase 2 Complete ✅
 
 ---
 
@@ -28,15 +28,15 @@
 
 ## Phase 2 – GraphQL API
 
-- [ ] GraphQL schema (SDL) – Brewery, Beer, BeerStyle, Ingredient
-- [ ] Resolver – breweries (list with country filter)
-- [ ] Resolver – brewery (detail + beers)
-- [ ] Resolver – beers (list with style, abv filter)
-- [ ] Resolver – beer (detail + style + ingredients)
-- [ ] Resolver – styles (list)
-- [ ] Resolver – style (detail + beer list)
-- [ ] GraphQL Codegen – generate TypeScript types
-- [ ] API testing in GraphQL Playground
+- [x] GraphQL schema (SDL) – Brewery, Beer, BeerStyle, Ingredient
+- [x] Resolver – breweries (list with country filter)
+- [x] Resolver – brewery (detail + beers)
+- [x] Resolver – beers (list with style, abv filter)
+- [x] Resolver – beer (detail + style + ingredients)
+- [x] Resolver – styles (list)
+- [x] Resolver – style (detail + beer list)
+- [x] GraphQL Codegen – generate TypeScript types
+- [x] API testing in GraphQL Playground
 
 ## Phase 3 – Frontend: Catalog
 
@@ -113,3 +113,4 @@
 | 2026-06 | Beer styles: Lager/Pilsner/Amber Lager/Dark Lager               | Replaced Czech Lager, Pale Lager, Dunkel with accurate English terminology; Hefeweizen kept as widely recognized term |
 | 2026-06 | Beer data: real research over AI generation                     | Pivovar Malenovice (real website), 9 major breweries (web research); AI generation avoided for factual accuracy       |
 | 2026-06 | Beer seed: additional-breweries + major-breweries-beers modules | Pivovar Malenovice in separate module (non-Wikidata source); major breweries from JSON data file                      |
+| 2026-06 | `styles` query has limit/offset pagination                      | Consistency with `breweries` and `beers`; catalog UI will likely paginate styles table                                |
