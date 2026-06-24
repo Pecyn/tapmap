@@ -108,6 +108,12 @@ export type QueryStyleArgs = {
 };
 
 
+export type QueryStylesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -257,7 +263,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   breweries?: Resolver<Array<ResolversTypes['Brewery']>, ParentType, ContextType, Partial<QueryBreweriesArgs>>;
   brewery?: Resolver<Maybe<ResolversTypes['Brewery']>, ParentType, ContextType, RequireFields<QueryBreweryArgs, 'id'>>;
   style?: Resolver<Maybe<ResolversTypes['BeerStyle']>, ParentType, ContextType, RequireFields<QueryStyleArgs, 'id'>>;
-  styles?: Resolver<Array<ResolversTypes['BeerStyle']>, ParentType, ContextType>;
+  styles?: Resolver<Array<ResolversTypes['BeerStyle']>, ParentType, ContextType, Partial<QueryStylesArgs>>;
 };
 
 export type Resolvers<ContextType = any> = {

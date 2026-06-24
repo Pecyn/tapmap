@@ -56,6 +56,6 @@ type Query {
   brewery(id: ID!): Brewery
   beers(filter: BeerFilter, limit: Int, offset: Int): [Beer!]!
   beer(id: ID!): Beer
-  styles: [BeerStyle!]!
+  styles(limit: Int, offset: Int): [BeerStyle!]!
   style(id: ID!): BeerStyle
 }
