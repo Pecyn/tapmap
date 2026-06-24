@@ -34,6 +34,7 @@ export const breweryResolvers = {
     beers: (parent: { id: string }) =>
       prisma.beer.findMany({
         where: { breweryId: parent.id },
+        include: { brewery: true, style: true },
         orderBy: { name: 'asc' },
       }),
   },
