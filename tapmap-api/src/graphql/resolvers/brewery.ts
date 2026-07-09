@@ -6,6 +6,9 @@ export const breweryResolvers = {
   Query: {
     breweries: async (_: unknown, { filter, limit, offset }: QueryBreweriesArgs) => {
       const where: Prisma.BreweryWhereInput = {}
+      if (filter?.name != null) {
+        where.name = { contains: filter.name, mode: 'insensitive' }
+      }
       if (filter?.city != null) {
         where.city = { contains: filter.city, mode: 'insensitive' }
       }

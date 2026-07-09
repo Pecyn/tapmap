@@ -40,6 +40,7 @@ type Ingredient {
 }
 
 input BreweryFilter {
+  name: String
   city: String
   country: String
   hasCoordinates: Boolean
