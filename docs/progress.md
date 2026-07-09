@@ -40,7 +40,7 @@
 
 ## Phase 3 – Frontend: Catalog
 
-- [ ] Layout – main navigation (Breweries / Beers / Styles)
+- [x] Layout – main navigation (Breweries / Beers / Styles)
 - [ ] /breweries – brewery list (SSR + filters)
 - [ ] /breweries/[id] – brewery detail + beer list (SSR)
 - [ ] /beers – beer list (SSR + filters)

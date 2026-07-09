@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Navigation from '@/components/Navigation'
+import BottomTabBar from '@/components/BottomTabBar'
 import { ApolloClientProvider } from '@/lib/apollo-provider'
 import './globals.css'
 
@@ -29,7 +30,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ApolloClientProvider>
           <Navigation />
-          <div className="flex flex-col flex-1">{children}</div>
+          <div className="flex flex-col flex-1 pb-16 md:pb-0">{children}</div>
+          <BottomTabBar />
         </ApolloClientProvider>
       </body>
     </html>
