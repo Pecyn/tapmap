@@ -14,10 +14,12 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n  query Beers($filter: BeerFilter, $limit: Int, $offset: Int) {\n    beers(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      abv\n      ibu\n      brewery {\n        id\n        name\n      }\n      style {\n        id\n        name\n      }\n    }\n  }\n": typeof types.BeersDocument,
     "\n  query Brewery($id: ID!) {\n    brewery(id: $id) {\n      id\n      name\n      city\n      country\n      foundedYear\n      website\n      beers {\n        id\n        name\n        abv\n        style {\n          name\n        }\n      }\n    }\n  }\n": typeof types.BreweryDocument,
     "\n  query Breweries($filter: BreweryFilter, $limit: Int, $offset: Int) {\n    breweries(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      city\n      country\n      beers {\n        id\n      }\n    }\n  }\n": typeof types.BreweriesDocument,
 };
 const documents: Documents = {
+    "\n  query Beers($filter: BeerFilter, $limit: Int, $offset: Int) {\n    beers(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      abv\n      ibu\n      brewery {\n        id\n        name\n      }\n      style {\n        id\n        name\n      }\n    }\n  }\n": types.BeersDocument,
     "\n  query Brewery($id: ID!) {\n    brewery(id: $id) {\n      id\n      name\n      city\n      country\n      foundedYear\n      website\n      beers {\n        id\n        name\n        abv\n        style {\n          name\n        }\n      }\n    }\n  }\n": types.BreweryDocument,
     "\n  query Breweries($filter: BreweryFilter, $limit: Int, $offset: Int) {\n    breweries(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      city\n      country\n      beers {\n        id\n      }\n    }\n  }\n": types.BreweriesDocument,
 };
@@ -36,6 +38,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Beers($filter: BeerFilter, $limit: Int, $offset: Int) {\n    beers(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      abv\n      ibu\n      brewery {\n        id\n        name\n      }\n      style {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query Beers($filter: BeerFilter, $limit: Int, $offset: Int) {\n    beers(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      abv\n      ibu\n      brewery {\n        id\n        name\n      }\n      style {\n        id\n        name\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -20,6 +20,7 @@ export const beerResolvers = {
         take: limit ?? 20,
         skip: offset ?? 0,
         orderBy: { name: 'asc' },
+        include: { brewery: true, style: true },
       })
     },
 
