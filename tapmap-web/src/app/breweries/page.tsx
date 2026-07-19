@@ -1,6 +1,7 @@
 import { print } from 'graphql'
 import type { ResultOf } from '@graphql-typed-document-node/core'
 import BreweryCard from '@/components/BreweryCard'
+import SearchInput from '@/components/SearchInput'
 import { BreweriesQuery } from './queries'
 
 type BreweriesResponse = {
@@ -8,13 +9,20 @@ type BreweriesResponse = {
   errors?: { message: string }[]
 }
 
-export default async function BreweriesPage() {
+type BreweriesPageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function BreweriesPage({ searchParams }: BreweriesPageProps) {
+  const { search } = await searchParams
+  const name = typeof search === 'string' && search.length > 0 ? search : undefined
+
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL!, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: print(BreweriesQuery),
-      variables: { limit: 300, offset: 0 },
+      variables: { filter: name ? { name } : undefined, limit: 300, offset: 0 },
     }),
     cache: 'no-store',
   })
@@ -34,8 +42,13 @@ export default async function BreweriesPage() {
   return (
     <main className="flex-1 p-8">
       <h1 className="text-2xl font-semibold text-foreground">Breweries</h1>
+      <div className="mt-4">
+        <SearchInput />
+      </div>
       {breweries.length === 0 ? (
-        <p className="mt-6 text-muted-foreground">No breweries found.</p>
+        <p className="mt-6 text-muted-foreground">
+          {name ? `No breweries match "${name}"` : 'No breweries found.'}
+        </p>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
           {breweries.map((brewery) => (
