@@ -21,3 +21,14 @@ export const BeersQuery = graphql(`
 `)
 
 export type Beer = ResultOf<typeof BeersQuery>['beers'][number]
+
+export const StylesForFilterQuery = graphql(`
+  query StylesForFilter {
+    styles(limit: 100) {
+      id
+      name
+    }
+  }
+`)
+
+export type StyleOption = ResultOf<typeof StylesForFilterQuery>['styles'][number]
