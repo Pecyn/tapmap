@@ -13,6 +13,8 @@ type StylePageProps = {
   params: Promise<{ id: string }>
 }
 
+export const revalidate = 3600
+
 export default async function StylePage({ params }: StylePageProps) {
   const { id } = await params
 
@@ -23,7 +25,6 @@ export default async function StylePage({ params }: StylePageProps) {
       query: print(StyleQuery),
       variables: { id },
     }),
-    cache: 'no-store',
   })
 
   if (!res.ok) {
