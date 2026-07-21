@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/styles)",
+      "Bash(curl -s http://localhost:3000/styles -o /tmp/styles.html -w \"%{http_code}\\\\n\")",
+      "Bash(grep -o 'class=\"block rounded-lg[^\"]*\"[^<]*<h2[^<]*<[^>]*>[^<]*<\\\\/h2>' /tmp/styles.html | head -5; echo \"---count---\"; grep -o 'beers</p>' /tmp/styles.html | wc -l; echo \"---sample---\"; grep -oE '<h2[^>]*>[^<]+</h2>|[0-9]+ beers' /tmp/styles.html | head -20)",
+      "Read(//tmp/**)",
+      "Bash(grep -oE 'href=\"/styles/[^\"]*\"' /tmp/styles.html | head -3)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/styles/cmqkxksie000ct0ugpkopwhaw)",
+      "Bash(powershell -NoProfile -Command 'Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '\\\\''*next-server*'\\\\'' -or \\($_.CommandLine -like '\\\\''*next*dev*'\\\\'' -and $_.CommandLine -notlike '\\\\''*tapmap-api*'\\\\''\\) } | Select-Object ProcessId, CommandLine')",
+      "Bash(netstat -ano)",
+      "Bash(powershell -NoProfile -Command \"Stop-Process -Id 33608,32428,35284 -Force -ErrorAction SilentlyContinue\")"
+    ]
+  }
+}
