@@ -9,7 +9,14 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/styles/cmqkxksie000ct0ugpkopwhaw)",
       "Bash(powershell -NoProfile -Command 'Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '\\\\''*next-server*'\\\\'' -or \\($_.CommandLine -like '\\\\''*next*dev*'\\\\'' -and $_.CommandLine -notlike '\\\\''*tapmap-api*'\\\\''\\) } | Select-Object ProcessId, CommandLine')",
       "Bash(netstat -ano)",
-      "Bash(powershell -NoProfile -Command \"Stop-Process -Id 33608,32428,35284 -Force -ErrorAction SilentlyContinue\")"
+      "Bash(powershell -NoProfile -Command \"Stop-Process -Id 33608,32428,35284 -Force -ErrorAction SilentlyContinue\")",
+      "Bash(curl -s http://localhost:3000/styles -o \"C:/Users/Peca/AppData/Local/Temp/claude/d--code-tapmap/87806942-0f29-4a69-885b-bb98d3d1aaad/scratchpad/styles.html\" -w \"list: %{http_code}\\\\n\")",
+      "Bash(curl -s http://127.0.0.1:4200/graphql -H \"Content-Type: application/json\" -d '{\"query\":\"query { styles\\(limit: 25\\) { id name beers { id } } }\"}' -o \"C:/Users/Peca/AppData/Local/Temp/claude/d--code-tapmap/87806942-0f29-4a69-885b-bb98d3d1aaad/scratchpad/styles-api.json\")",
+      "Bash(curl -s http://localhost:3000/styles/cmqkxksgz0002t0ugtjfd8t7k -o \"C:/Users/Peca/AppData/Local/Temp/claude/d--code-tapmap/87806942-0f29-4a69-885b-bb98d3d1aaad/scratchpad/ipa.html\" -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s -o /dev/null -w \"notfound: %{http_code}\\\\n\" http://localhost:3000/styles/does-not-exist)",
+      "Bash(powershell -NoProfile -Command 'Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '\\\\''*next dev*'\\\\'' -or $_.CommandLine -like '\\\\''*next-server*'\\\\'' } | Select-Object ProcessId, CommandLine')",
+      "Bash(powershell -NoProfile -Command 'Stop-Process -Id 30488 -Force -ErrorAction SilentlyContinue; Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '\\\\''*next*dev*build*'\\\\'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }')",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 2 http://localhost:3000/)"
     ]
   }
 }
