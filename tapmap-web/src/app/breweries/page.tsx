@@ -1,6 +1,7 @@
 import { print } from 'graphql'
 import type { ResultOf } from '@graphql-typed-document-node/core'
 import BreweryCard from '@/components/BreweryCard'
+import BreweryFilters from '@/components/BreweryFilters'
 import SearchInput from '@/components/SearchInput'
 import { BreweriesQuery } from './queries'
 
@@ -14,15 +15,17 @@ type BreweriesPageProps = {
 }
 
 export default async function BreweriesPage({ searchParams }: BreweriesPageProps) {
-  const { search } = await searchParams
+  const { search, city: cityParam } = await searchParams
   const name = typeof search === 'string' && search.length > 0 ? search : undefined
+  const city = typeof cityParam === 'string' && cityParam.length > 0 ? cityParam : undefined
+  const filter = name || city ? { ...(name && { name }), ...(city && { city }) } : undefined
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL!, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: print(BreweriesQuery),
-      variables: { filter: name ? { name } : undefined, limit: 300, offset: 0 },
+      variables: { filter, limit: 300, offset: 0 },
     }),
     cache: 'no-store',
   })
@@ -42,12 +45,16 @@ export default async function BreweriesPage({ searchParams }: BreweriesPageProps
   return (
     <main className="flex-1 p-8">
       <h1 className="text-2xl font-semibold text-foreground">Breweries</h1>
-      <div className="mt-4">
-        <SearchInput />
+      <div className="mt-4 rounded-lg border border-border bg-card p-4">
+        <h3 className="mb-3 text-sm font-bold text-card-foreground">Filters</h3>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <SearchInput />
+          <BreweryFilters />
+        </div>
       </div>
       {breweries.length === 0 ? (
         <p className="mt-6 text-muted-foreground">
-          {name ? `No breweries match "${name}"` : 'No breweries found.'}
+          {name || city ? 'No breweries match your filters.' : 'No breweries found.'}
         </p>
       ) : (
         <div className="mt-6 flex flex-col gap-4">
