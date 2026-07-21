@@ -19,6 +19,7 @@ type Documents = {
     "\n  query StylesForFilter {\n    styles(limit: 100) {\n      id\n      name\n    }\n  }\n": typeof types.StylesForFilterDocument,
     "\n  query Brewery($id: ID!) {\n    brewery(id: $id) {\n      id\n      name\n      city\n      country\n      foundedYear\n      website\n      beers {\n        id\n        name\n        abv\n        style {\n          name\n        }\n      }\n    }\n  }\n": typeof types.BreweryDocument,
     "\n  query Breweries($filter: BreweryFilter, $limit: Int, $offset: Int) {\n    breweries(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      city\n      country\n      beers {\n        id\n      }\n    }\n  }\n": typeof types.BreweriesDocument,
+    "\n  query HomeStats {\n    breweries(limit: 300) {\n      id\n    }\n    beers(limit: 100) {\n      id\n    }\n    styles(limit: 100) {\n      id\n    }\n  }\n": typeof types.HomeStatsDocument,
     "\n  query Style($id: ID!) {\n    style(id: $id) {\n      id\n      name\n      description\n      beers {\n        id\n        name\n        abv\n        brewery {\n          id\n          name\n        }\n      }\n    }\n  }\n": typeof types.StyleDocument,
     "\n  query Styles($limit: Int, $offset: Int) {\n    styles(limit: $limit, offset: $offset) {\n      id\n      name\n      beers {\n        id\n      }\n    }\n  }\n": typeof types.StylesDocument,
 };
@@ -28,6 +29,7 @@ const documents: Documents = {
     "\n  query StylesForFilter {\n    styles(limit: 100) {\n      id\n      name\n    }\n  }\n": types.StylesForFilterDocument,
     "\n  query Brewery($id: ID!) {\n    brewery(id: $id) {\n      id\n      name\n      city\n      country\n      foundedYear\n      website\n      beers {\n        id\n        name\n        abv\n        style {\n          name\n        }\n      }\n    }\n  }\n": types.BreweryDocument,
     "\n  query Breweries($filter: BreweryFilter, $limit: Int, $offset: Int) {\n    breweries(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      city\n      country\n      beers {\n        id\n      }\n    }\n  }\n": types.BreweriesDocument,
+    "\n  query HomeStats {\n    breweries(limit: 300) {\n      id\n    }\n    beers(limit: 100) {\n      id\n    }\n    styles(limit: 100) {\n      id\n    }\n  }\n": types.HomeStatsDocument,
     "\n  query Style($id: ID!) {\n    style(id: $id) {\n      id\n      name\n      description\n      beers {\n        id\n        name\n        abv\n        brewery {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.StyleDocument,
     "\n  query Styles($limit: Int, $offset: Int) {\n    styles(limit: $limit, offset: $offset) {\n      id\n      name\n      beers {\n        id\n      }\n    }\n  }\n": types.StylesDocument,
 };
@@ -66,6 +68,10 @@ export function graphql(source: "\n  query Brewery($id: ID!) {\n    brewery(id: 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query Breweries($filter: BreweryFilter, $limit: Int, $offset: Int) {\n    breweries(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      city\n      country\n      beers {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query Breweries($filter: BreweryFilter, $limit: Int, $offset: Int) {\n    breweries(filter: $filter, limit: $limit, offset: $offset) {\n      id\n      name\n      city\n      country\n      beers {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query HomeStats {\n    breweries(limit: 300) {\n      id\n    }\n    beers(limit: 100) {\n      id\n    }\n    styles(limit: 100) {\n      id\n    }\n  }\n"): (typeof documents)["\n  query HomeStats {\n    breweries(limit: 300) {\n      id\n    }\n    beers(limit: 100) {\n      id\n    }\n    styles(limit: 100) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
