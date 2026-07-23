@@ -8,7 +8,6 @@ const navLinks = [
   { href: '/breweries', label: 'Breweries' },
   { href: '/beers', label: 'Beers' },
   { href: '/styles', label: 'Styles' },
-  { href: '/dev/map', label: 'Map' },
 ]
 
 export default function Navigation() {
