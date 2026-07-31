@@ -1,16 +1,18 @@
 'use client'
 
-import { useState } from 'react'
-import { Map as MapLibre, Marker } from 'react-map-gl/maplibre'
+import { useMemo, useState } from 'react'
+import { Map as MapLibre, Marker, useMap } from 'react-map-gl/maplibre'
+import type { MapEvent, ViewStateChangeEvent } from 'react-map-gl/maplibre'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { HopIcon } from '@/components/icons'
 import type { BreweryWithCoordinates } from '@/app/breweries/queries'
+import { useBreweryClusters, type ClusterBounds } from '@/hooks/useBreweryClusters'
 
 type MapProps = {
   breweries?: BreweryWithCoordinates[]
 }
 
-type BreweryPoint = Omit<BreweryWithCoordinates, 'latitude' | 'longitude'> & {
+export type BreweryPoint = Omit<BreweryWithCoordinates, 'latitude' | 'longitude'> & {
   latitude: number
   longitude: number
 }
@@ -43,8 +45,55 @@ function BreweryMarker({ brewery }: { brewery: BreweryPoint }) {
   )
 }
 
+function ClusterMarker({
+  longitude,
+  latitude,
+  clusterId,
+  pointCount,
+  index,
+}: {
+  longitude: number
+  latitude: number
+  clusterId: number
+  pointCount: number
+  index: ReturnType<typeof useBreweryClusters>['index']
+}) {
+  const { current: map } = useMap()
+
+  function handleClick() {
+    const expansionZoom = index.getClusterExpansionZoom(clusterId)
+    map?.easeTo({ center: [longitude, latitude], zoom: expansionZoom })
+  }
+
+  return (
+    <Marker longitude={longitude} latitude={latitude} anchor="center">
+      <div
+        className="relative flex cursor-pointer items-center justify-center transition-transform hover:scale-105"
+        onClick={handleClick}
+      >
+        <HopIcon className="h-8 w-8 text-primary" />
+        <span className="absolute -bottom-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-background bg-secondary px-1 font-mono text-xs font-bold text-secondary-foreground">
+          {pointCount}
+        </span>
+      </div>
+    </Marker>
+  )
+}
+
 export default function Map({ breweries = [] }: MapProps) {
   const maptilerKey = process.env.NEXT_PUBLIC_MAPTILER_KEY
+  const [bounds, setBounds] = useState<ClusterBounds | null>(null)
+  const [zoom, setZoom] = useState(6.5)
+
+  const points = breweries.filter(
+    (brewery): brewery is BreweryPoint => brewery.latitude != null && brewery.longitude != null,
+  )
+
+  const { clusters, index } = useBreweryClusters(points, bounds, zoom)
+  const breweryById = useMemo(
+    () => new globalThis.Map(points.map((brewery) => [brewery.id, brewery])),
+    [points],
+  )
 
   if (!maptilerKey) {
     return (
@@ -56,9 +105,11 @@ export default function Map({ breweries = [] }: MapProps) {
     )
   }
 
-  const points = breweries.filter(
-    (brewery): brewery is BreweryPoint => brewery.latitude != null && brewery.longitude != null,
-  )
+  function handleMove(evt: MapEvent | ViewStateChangeEvent) {
+    const mapBounds = evt.target.getBounds()
+    setBounds([mapBounds.getWest(), mapBounds.getSouth(), mapBounds.getEast(), mapBounds.getNorth()])
+    setZoom(evt.target.getZoom())
+  }
 
   return (
     <div className="h-[350px] w-full overflow-hidden rounded-lg border border-border md:h-[500px]">
@@ -66,10 +117,27 @@ export default function Map({ breweries = [] }: MapProps) {
         initialViewState={{ longitude: 15.5, latitude: 49.8, zoom: 6.5 }}
         mapStyle={`https://api.maptiler.com/maps/streets-v2/style.json?key=${maptilerKey}`}
         style={{ width: '100%', height: '100%' }}
+        onLoad={handleMove}
+        onMove={handleMove}
       >
-        {points.map((brewery) => (
-          <BreweryMarker key={brewery.id} brewery={brewery} />
-        ))}
+        {clusters.map((feature) => {
+          const [longitude, latitude] = feature.geometry.coordinates
+          if ('cluster' in feature.properties) {
+            return (
+              <ClusterMarker
+                key={`cluster-${feature.properties.cluster_id}`}
+                longitude={longitude}
+                latitude={latitude}
+                clusterId={feature.properties.cluster_id}
+                pointCount={feature.properties.point_count}
+                index={index}
+              />
+            )
+          }
+          const brewery = breweryById.get(feature.properties.breweryId)
+          if (!brewery) return null
+          return <BreweryMarker key={brewery.id} brewery={brewery} />
+        })}
       </MapLibre>
     </div>
   )
