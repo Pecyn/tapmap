@@ -2,8 +2,10 @@
 
 import { useMemo, useState } from 'react'
 import { Map as MapLibre, Marker, useMap } from 'react-map-gl/maplibre'
-import type { MapEvent, ViewStateChangeEvent } from 'react-map-gl/maplibre'
+import type { MapEvent, MarkerEvent, ViewStateChangeEvent } from 'react-map-gl/maplibre'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { HopIcon } from '@/components/icons'
 import type { BreweryWithCoordinates } from '@/app/breweries/queries'
 import { useBreweryClusters, type ClusterBounds } from '@/hooks/useBreweryClusters'
@@ -17,27 +19,72 @@ export type BreweryPoint = Omit<BreweryWithCoordinates, 'latitude' | 'longitude'
   longitude: number
 }
 
-function BreweryMarker({ brewery }: { brewery: BreweryPoint }) {
-  const [isHovered, setIsHovered] = useState(false)
+function BreweryMarker({
+  brewery,
+  isSelected,
+  onSelect,
+}: {
+  brewery: BreweryPoint
+  isSelected: boolean
+  onSelect: (id: string | null) => void
+}) {
+  const router = useRouter()
+
+  function handleClick(evt: MarkerEvent<MouseEvent>) {
+    evt.originalEvent.stopPropagation()
+    const target = evt.originalEvent.target as HTMLElement | null
+
+    if (target?.closest('[data-marker-close]')) {
+      onSelect(null)
+      return
+    }
+
+    if (target?.closest('[data-marker-link]')) {
+      const isModifiedClick =
+        evt.originalEvent.metaKey ||
+        evt.originalEvent.ctrlKey ||
+        evt.originalEvent.shiftKey ||
+        evt.originalEvent.altKey ||
+        evt.originalEvent.button !== 0
+      if (!isModifiedClick) {
+        evt.originalEvent.preventDefault()
+        router.push(`/breweries/${brewery.id}`)
+      }
+      return
+    }
+
+    onSelect(brewery.id)
+  }
 
   return (
     <Marker
       longitude={brewery.longitude}
       latitude={brewery.latitude}
       anchor="center"
-      style={{ zIndex: isHovered ? 10 : 0 }}
+      style={{ zIndex: isSelected ? 10 : 0 }}
+      onClick={handleClick}
     >
-      <div
-        // className="relative flex cursor-pointer items-center justify-center"
-        className="relative flex h-7 w-7 items-center justify-center rounded-full bg-primary shadow-none"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {/* <HopIcon className="h-6 w-6 text-primary" /> */}
-        <HopIcon className="h-5 w-5 text-primary-foreground" />
-        {isHovered && (
-          <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 -translate-x-1/2 whitespace-nowrap rounded-lg border border-border bg-card px-2 py-1 text-xs text-card-foreground">
-            {brewery.name}
+      <div className="relative flex cursor-pointer items-center justify-center">
+        <HopIcon className={`h-6 w-6 text-primary transition-transform ${isSelected ? 'scale-110' : ''}`} />
+        {isSelected && (
+          <div className="absolute bottom-full left-1/2 z-10 mb-2 min-w-[180px] max-w-[240px] -translate-x-1/2 rounded-lg border border-border bg-card p-3 shadow-lg">
+            <button
+              type="button"
+              data-marker-close
+              aria-label="Close"
+              className="absolute right-1 top-1 text-muted-foreground hover:text-foreground"
+            >
+              ×
+            </button>
+            <p className="text-sm font-bold text-card-foreground">{brewery.name}</p>
+            {brewery.city && <p className="mt-0.5 text-xs text-muted-foreground">{brewery.city}</p>}
+            <Link
+              href={`/breweries/${brewery.id}`}
+              data-marker-link
+              className="mt-2 block w-full rounded-md bg-primary px-3 py-1.5 text-center text-xs font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Zobrazit detail
+            </Link>
           </div>
         )}
       </div>
@@ -84,6 +131,7 @@ export default function Map({ breweries = [] }: MapProps) {
   const maptilerKey = process.env.NEXT_PUBLIC_MAPTILER_KEY
   const [bounds, setBounds] = useState<ClusterBounds | null>(null)
   const [zoom, setZoom] = useState(6.5)
+  const [selectedBreweryId, setSelectedBreweryId] = useState<string | null>(null)
 
   const points = breweries.filter(
     (brewery): brewery is BreweryPoint => brewery.latitude != null && brewery.longitude != null,
@@ -111,6 +159,10 @@ export default function Map({ breweries = [] }: MapProps) {
     setZoom(evt.target.getZoom())
   }
 
+  function handleMapClick() {
+    setSelectedBreweryId(null)
+  }
+
   return (
     <div className="h-[350px] w-full overflow-hidden rounded-lg border border-border md:h-[500px]">
       <MapLibre
@@ -119,6 +171,7 @@ export default function Map({ breweries = [] }: MapProps) {
         style={{ width: '100%', height: '100%' }}
         onLoad={handleMove}
         onMove={handleMove}
+        onClick={handleMapClick}
       >
         {clusters.map((feature) => {
           const [longitude, latitude] = feature.geometry.coordinates
@@ -136,7 +189,14 @@ export default function Map({ breweries = [] }: MapProps) {
           }
           const brewery = breweryById.get(feature.properties.breweryId)
           if (!brewery) return null
-          return <BreweryMarker key={brewery.id} brewery={brewery} />
+          return (
+            <BreweryMarker
+              key={brewery.id}
+              brewery={brewery}
+              isSelected={selectedBreweryId === brewery.id}
+              onSelect={setSelectedBreweryId}
+            />
+          )
         })}
       </MapLibre>
     </div>

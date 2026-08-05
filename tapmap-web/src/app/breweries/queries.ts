@@ -22,6 +22,7 @@ export const BreweriesWithCoordinatesQuery = graphql(`
     breweries(filter: $filter, limit: 1000) {
       id
       name
+      city
       latitude
       longitude
     }
