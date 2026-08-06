@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ApolloClientProvider>
           <Navigation />
-          <div className="flex flex-col flex-1 pb-16 md:pb-0">{children}</div>
+          <div className="flex flex-col flex-1 pt-16 pb-16 md:pb-0">{children}</div>
           <BottomTabBar />
         </ApolloClientProvider>
       </body>

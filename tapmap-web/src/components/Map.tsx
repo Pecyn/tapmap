@@ -145,7 +145,7 @@ export default function Map({ breweries = [] }: MapProps) {
 
   if (!maptilerKey) {
     return (
-      <div className="flex h-[350px] w-full items-center justify-center rounded-lg border border-border bg-card p-4 text-card-foreground md:h-[500px]">
+      <div className="flex h-[45vh] w-full items-center justify-center rounded-lg border border-border bg-card p-4 text-card-foreground md:h-full">
         <p className="text-sm text-muted-foreground">
           Map unavailable: NEXT_PUBLIC_MAPTILER_KEY is not set.
         </p>
@@ -164,7 +164,7 @@ export default function Map({ breweries = [] }: MapProps) {
   }
 
   return (
-    <div className="h-[350px] w-full overflow-hidden rounded-lg border border-border md:h-[500px]">
+    <div className="h-[45vh] w-full overflow-hidden rounded-lg border border-border md:h-full">
       <MapLibre
         initialViewState={{ longitude: 15.5, latitude: 49.8, zoom: 6.5 }}
         mapStyle={`https://api.maptiler.com/maps/streets-v2/style.json?key=${maptilerKey}`}

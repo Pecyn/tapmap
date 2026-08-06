@@ -14,8 +14,8 @@ export default function Navigation() {
   const pathname = usePathname()
 
   return (
-    <header className="bg-foreground">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+    <header className="fixed inset-x-0 top-0 z-30 h-16 bg-foreground">
+      <div className="mx-auto flex h-full max-w-5xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-background">
           <HopIcon className="w-5 h-5 text-secondary" />
           TapMap
